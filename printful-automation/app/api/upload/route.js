@@ -24,6 +24,7 @@ export async function POST(request) {
   const blob = await put(key, file, {
     access: 'public',
     contentType: file.type,
+    token: process.env.UPLOADS_READ_WRITE_TOKEN,
   });
 
   return Response.json({ url: blob.url }, { headers: CORS_HEADERS });
