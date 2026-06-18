@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNAPAW — 해외 패션 구매대행</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e8e8e8;
+      --gray-400: #999;
+      --gray-600: #555;
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --red: #e63946;
+      --radius: 4px;
+      --shadow: 0 4px 24px rgba(0,0,0,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      background: rgba(13,13,13,.92);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    nav ul a {
+      color: var(--gray-200);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: color .2s;
+    }
+
+    nav ul a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      padding: 8px 20px;
+      border-radius: var(--radius);
+      font-weight: 700 !important;
+    }
+
+    /* ───── HERO ───── */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 5% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,.18) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-content { position: relative; max-width: 700px; }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--gray-400);
+      font-size: 17px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,.35); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,.25);
+    }
+
+    .btn-outline:hover { border-color: var(--white); }
+
+    .hero-stats {
+      margin-top: 64px;
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 900; color: var(--white); }
+    .stat-num span { color: var(--gold); }
+    .stat-label { font-size: 12px; color: var(--gray-400); letter-spacing: 1px; margin-top: 4px; }
+
+    /* ───── SECTION SHELL ───── */
+    section { padding: 80px 5%; }
+
+    .section-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--gray-600);
+      max-width: 500px;
+      font-weight: 300;
+    }
+
+    .section-header { margin-bottom: 52px; }
+
+    /* ───── MARQUEE ───── */
+    .marquee-wrap {
+      background: var(--gold);
+      overflow: hidden;
+      padding: 12px 0;
+    }
+
+    .marquee {
+      display: flex;
+      gap: 0;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee span {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--black);
+      padding: 0 32px;
+    }
+
+    .marquee span::after { content: '✦'; margin-left: 32px; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ───── WHY CARDS ───── */
+    #why { background: var(--gray-100); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .why-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 36px 28px;
+      box-shadow: var(--shadow);
+      transition: transform .2s;
+    }
+
+    .why-card:hover { transform: translateY(-4px); }
+
+    .why-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .why-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .why-card p  { font-size: 14px; color: var(--gray-600); font-weight: 300; }
+
+    /* ───── HOW IT WORKS ───── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0;
+      counter-reset: step;
+    }
+
+    .step {
+      padding: 36px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .step::after {
+      content: '→';
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: var(--gray-200);
+    }
+
+    .step:last-child::after { display: none; }
+
+    .step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--gold);
+      font-size: 20px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .step h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .step p  { font-size: 13px; color: var(--gray-600); font-weight: 300; }
+
+    /* ───── COUNTRIES ───── */
+    #countries { background: var(--black); }
+    #countries .section-title { color: var(--white); }
+    #countries .section-sub  { color: var(--gray-400); }
+
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    .country-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: border-color .2s, background .2s;
+    }
+
+    .country-card:hover { border-color: var(--gold); background: #1e1a10; }
+
+    .country-flag { font-size: 40px; margin-bottom: 12px; display: block; }
+    .country-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .country-note { font-size: 12px; color: var(--gray-400); }
+
+    /* ───── CALCULATOR ───── */
+    #calc { background: var(--gray-100); }
+
+    .calc-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 48px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label { font-size: 13px; font-weight: 700; letter-spacing: .5px; }
+
+    select, input[type="number"], input[type="text"], input[type="tel"], textarea {
+      padding: 12px 16px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--white);
+      transition: border-color .2s;
+      width: 100%;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .calc-result {
+      margin-top: 24px;
+      background: var(--black);
+      border-radius: 8px;
+      padding: 28px;
+      display: none;
+    }
+
+    .calc-result.show { display: block; }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #222;
+      font-size: 14px;
+      color: var(--gray-200);
+    }
+
+    .result-row:last-child { border-bottom: none; }
+    .result-row.total { font-size: 18px; font-weight: 700; color: var(--white); padding-top: 16px; margin-top: 8px; }
+    .result-row.total .val { color: var(--gold); }
+
+    .result-note { font-size: 12px; color: var(--gray-400); margin-top: 12px; text-align: center; }
+
+    /* ───── ORDER FORM ───── */
+    #order { background: var(--white); }
+
+    .order-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-submit {
+      margin-top: 24px;
+      width: 100%;
+      font-size: 16px;
+      padding: 18px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: background .2s;
+    }
+
+    .form-submit:hover { background: #222; }
+
+    .form-notice {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--gray-400);
+      text-align: center;
+    }
+
+    /* ───── REVIEWS ───── */
+    #reviews { background: var(--black); }
+    #reviews .section-title { color: var(--white); }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .review-card {
+      background: #161616;
+      border: 1px solid #252525;
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .review-stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+
+    .review-text {
+      font-size: 14px;
+      color: var(--gray-200);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #8B6914);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .review-name { font-size: 13px; font-weight: 700; color: var(--white); }
+    .review-date { font-size: 12px; color: var(--gray-400); }
+
+    /* ───── FAQ ───── */
+    .faq-list { max-width: 680px; margin: 0 auto; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: left;
+      gap: 16px;
+    }
+
+    .faq-icon { font-size: 20px; flex-shrink: 0; transition: transform .2s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--gray-600);
+      font-weight: 300;
+      line-height: 1.8;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease, padding .3s;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    /* ───── SMARTSTORE BANNER ───── */
+    .store-banner {
+      background: linear-gradient(135deg, #03C75A 0%, #02a34c 100%);
+      padding: 56px 5%;
+      text-align: center;
+    }
+
+    .store-banner h2 {
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .store-banner p {
+      color: rgba(255,255,255,.8);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .btn-naver {
+      background: var(--white);
+      color: #03C75A;
+      font-size: 15px;
+      padding: 16px 36px;
+    }
+
+    .btn-naver:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: #050505;
+      padding: 48px 5% 32px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .footer-brand .nav-logo { font-size: 20px; display: block; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--gray-400); font-weight: 300; max-width: 260px; line-height: 1.8; }
+
+    .footer-links h4 { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 16px; letter-spacing: 1px; }
+
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links ul a { font-size: 13px; color: var(--gray-400); text-decoration: none; transition: color .2s; }
+    .footer-links ul a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom p { font-size: 12px; color: #333; }
+
+    /* ───── TOAST ───── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--gold);
+      opacity: 0;
+      transition: all .3s ease;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .step::after { display: none; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .calc-wrap { padding: 28px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>S</span>NAPAW</a>
+  <ul>
+    <li><a href="#why">서비스 소개</a></li>
+    <li><a href="#how">이용 방법</a></li>
+    <li><a href="#calc">배송비 계산</a></li>
+    <li><a href="#order" class="nav-cta">주문 신청</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">🌏 GLOBAL FASHION PROXY SHOPPING</div>
+    <h1>해외 패션을<br><em>내 손 안에.</em></h1>
+    <p>일본 · 미국 · 유럽 · 중국의 인기 패션 아이템을<br>빠르고 안전하게 직구해드립니다.</p>
+    <div class="hero-btns">
+      <a href="#order" class="btn btn-primary">&#43; 구매 신청하기</a>
+      <a href="#calc" class="btn btn-outline">💰 배송비 계산</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">2,400<span>+</span></div>
+        <div class="stat-label">누적 주문</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">고객 만족도</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3<span>~5일</span></div>
+        <div class="stat-label">평균 배송</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4<span>개국</span></div>
+        <div class="stat-label">구매 가능</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>UNIQLO JAPAN</span><span>ZARA EUROPE</span><span>SHEIN CHINA</span>
+    <span>URBAN OUTFITTERS USA</span><span>BEAMS JAPAN</span><span>MANGO SPAIN</span>
+    <span>H&amp;M</span><span>ACNE STUDIOS</span><span>YOHJI YAMAMOTO</span>
+    <span>CARHARTT USA</span><span>STUSSY</span><span>SUPREME</span>
+    <span>UNIQLO JAPAN</span><span>ZARA EUROPE</span><span>SHEIN CHINA</span>
+    <span>URBAN OUTFITTERS USA</span><span>BEAMS JAPAN</span><span>MANGO SPAIN</span>
+    <span>H&amp;M</span><span>ACNE STUDIOS</span><span>YOHJI YAMAMOTO</span>
+    <span>CARHARTT USA</span><span>STUSSY</span><span>SUPREME</span>
+  </div>
+</div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-header">
+    <div class="section-tag">Why SNAPAW</div>
+    <h2 class="section-title">왜 스냅어 구매대행인가요?</h2>
+    <p class="section-sub">직접 구매의 번거로움 없이, 전문가가 대신 사드립니다.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">🔐</span>
+      <h3>100% 정품 보장</h3>
+      <p>공식 사이트 또는 인증 판매처에서만 구매합니다. 가품이면 전액 환불.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">⚡</span>
+      <h3>빠른 배송</h3>
+      <p>결제 후 평균 3~5일 내 국내 수령. 빠른 통관 처리로 기다림을 최소화.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💬</span>
+      <h3>실시간 현지 대응</h3>
+      <p>사이즈 문의, 품절 상황, 대체 상품 안내까지 카카오로 즉시 연락드립니다.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📦</span>
+      <h3>안전 포장</h3>
+      <p>파손 없이 도착할 수 있도록 버블랩·에어캡으로 꼼꼼하게 포장합니다.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💰</span>
+      <h3>투명한 비용</h3>
+      <p>수수료·배송비·관세를 사전에 정확히 안내합니다. 숨겨진 비용 없음.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🔄</span>
+      <h3>교환·반품 대행</h3>
+      <p>사이즈가 다르거나 불량품일 경우 교환·반품 절차도 대신 진행해드립니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:var(--black)">
+  <div class="section-header">
+    <div class="section-tag" style="color:var(--gold)">How It Works</div>
+    <h2 class="section-title" style="color:var(--white)">이용 방법</h2>
+    <p class="section-sub">4단계로 간편하게 해외 패션 아이템을 받아보세요.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>상품 URL 전달</h3>
+      <p>원하는 상품의 링크와 사이즈·색상을 아래 폼 또는 카카오로 보내주세요.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>견적 안내</h3>
+      <p>상품가 + 현지 배송비 + 수수료 + 관세 예상액을 24시간 내에 안내드립니다.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>결제 & 구매</h3>
+      <p>견적 확인 후 입금하시면 즉시 현지에서 구매를 진행합니다.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>국내 배송 완료</h3>
+      <p>인천 통관 후 CJ대한통운으로 빠르게 배송됩니다. 운송장 실시간 제공.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTRIES -->
+<section id="countries">
+  <div class="section-header">
+    <div class="section-tag">구매 가능 국가</div>
+    <h2 class="section-title">어디서든 구매해드립니다</h2>
+  </div>
+  <div class="country-grid">
+    <div class="country-card">
+      <span class="country-flag">🇯🇵</span>
+      <div class="country-name">일본</div>
+      <div class="country-note">유니클로 · 빔스 · 무지</div>
+    </div>
+    <div class="country-card">
+      <span class="country-flag">🇺🇸</span>
+      <div class="country-name">미국</div>
+      <div class="country-note">슈프림 · 카하트 · UO</div>
+    </div>
+    <div class="country-card">
+      <span class="country-flag">🇫🇷</span>
+      <div class="country-name">프랑스</div>
+      <div class="country-note">자라 · 망고 · APC</div>
+    </div>
+    <div class="country-card">
+      <span class="country-flag">🇨🇳</span>
+      <div class="country-name">중국</div>
+      <div class="country-note">쉬인 · 타오바오 · 징동</div>
+    </div>
+    <div class="country-card">
+      <span class="country-flag">🇬🇧</span>
+      <div class="country-name">영국</div>
+      <div class="country-note">아소스 · 탑샵 · 존루이스</div>
+    </div>
+    <div class="country-card">
+      <span class="country-flag">🇩🇪</span>
+      <div class="country-name">독일</div>
+      <div class="country-note">아디다스 · 잘란도</div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calc">
+  <div class="section-header" style="text-align:center">
+    <div class="section-tag">배송비 계산기</div>
+    <h2 class="section-title">총 비용이 얼마나 될까요?</h2>
+    <p class="section-sub" style="margin:0 auto">예상 금액을 미리 확인해보세요. (실제 금액은 견적 시 확정됩니다)</p>
+  </div>
+  <div class="calc-wrap">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="c-country">구매 국가</label>
+        <select id="c-country">
+          <option value="jp">🇯🇵 일본</option>
+          <option value="us">🇺🇸 미국</option>
+          <option value="eu">🇪🇺 유럽</option>
+          <option value="cn">🇨🇳 중국</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="c-price">상품 가격 (원화 환산)</label>
+        <input type="number" id="c-price" placeholder="예: 80000" min="0" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="c-weight">예상 무게 (g)</label>
+        <input type="number" id="c-weight" placeholder="예: 500" min="0" />
+      </div>
+      <div class="form-group">
+        <label for="c-count">수량</label>
+        <input type="number" id="c-count" placeholder="1" min="1" value="1" />
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:15px;padding:16px" onclick="calculate()">계산하기 →</button>
+
+    <div class="calc-result" id="calc-result">
+      <div class="result-row">
+        <span>상품 금액</span><span class="val" id="r-price">-</span>
+      </div>
+      <div class="result-row">
+        <span>수수료 (8%)</span><span class="val" id="r-fee">-</span>
+      </div>
+      <div class="result-row">
+        <span>국제 배송비</span><span class="val" id="r-ship">-</span>
+      </div>
+      <div class="result-row">
+        <span>예상 관세·부가세</span><span class="val" id="r-tax">-</span>
+      </div>
+      <div class="result-row total">
+        <span>예상 합계</span><span class="val" id="r-total">-</span>
+      </div>
+      <p class="result-note">* 환율·관세율 변동에 따라 실제 금액과 다를 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order">
+  <div class="section-header" style="text-align:center">
+    <div class="section-tag">주문 신청</div>
+    <h2 class="section-title">지금 바로 신청하세요</h2>
+    <p class="section-sub" style="margin:0 auto">신청 후 24시간 내에 견적 안내 드립니다.</p>
+  </div>
+  <div class="order-wrap">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="o-name">이름</label>
+        <input type="text" id="o-name" placeholder="홍길동" />
+      </div>
+      <div class="form-group">
+        <label for="o-phone">연락처</label>
+        <input type="tel" id="o-phone" placeholder="010-0000-0000" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="o-country">구매 국가</label>
+        <select id="o-country">
+          <option>🇯🇵 일본</option>
+          <option>🇺🇸 미국</option>
+          <option>🇫🇷 프랑스/유럽</option>
+          <option>🇨🇳 중국</option>
+          <option>🇬🇧 영국</option>
+          <option>🇩🇪 독일</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="o-budget">예산 (원)</label>
+        <input type="number" id="o-budget" placeholder="예: 150000" />
+      </div>
+    </div>
+    <div class="form-group full" style="margin-bottom:16px">
+      <label for="o-url">상품 URL</label>
+      <input type="text" id="o-url" placeholder="https://www.uniqlo.com/..." />
+    </div>
+    <div class="form-group full" style="margin-bottom:16px">
+      <label for="o-detail">상세 요청사항</label>
+      <textarea id="o-detail" placeholder="색상, 사이즈, 수량 등 원하시는 내용을 자세히 적어주세요."></textarea>
+    </div>
+    <button class="form-submit" onclick="submitOrder()">신청서 제출하기 →</button>
+    <p class="form-notice">제출 후 카카오톡 또는 문자로 연락드립니다. 운영시간 평일 09:00~22:00</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-header">
+    <div class="section-tag">고객 후기</div>
+    <h2 class="section-title">실제 구매 고객 후기</h2>
+  </div>
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"유니클로 재팬 한정판 플리스 사려고 했는데 혼자 직구하기 막막했어요. 스냅어 통해서 쉽게 샀고 5일 만에 받았어요. 완전 추천입니다!"</p>
+      <div class="review-author">
+        <div class="review-avatar">김</div>
+        <div><div class="review-name">김**님</div><div class="review-date">2025.03.12 · 일본 유니클로</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"슈프림 박스로고 티 미국 공홈에서 대행해줬는데 가품 걱정 전혀 없고 포장도 너무 꼼꼼해요. 앞으로 계속 이용할 것 같아요."</p>
+      <div class="review-author">
+        <div class="review-avatar">이</div>
+        <div><div class="review-name">이**님</div><div class="review-date">2025.02.28 · 미국 슈프림</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"관세·배송비 계산을 사전에 정확히 알려줘서 예산 세우기 편했어요. 사이즈 교환 문의도 빠르게 처리해줬습니다."</p>
+      <div class="review-author">
+        <div class="review-avatar">박</div>
+        <div><div class="review-name">박**님</div><div class="review-date">2025.01.19 · 유럽 자라</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-header" style="text-align:center">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">자주 묻는 질문</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>수수료는 얼마인가요?</span><span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">상품 금액의 8%입니다. 국제 배송비와 관세는 별도로 부과되며, 신청 전 견적서에 모든 금액을 명시해 드립니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>얼마나 걸리나요?</span><span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">국가마다 다르지만 일본 3~4일, 미국 5~7일, 유럽 7~10일, 중국 4~6일 내외입니다. 통관 상황에 따라 1~2일 추가될 수 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>관세는 얼마나 나오나요?</span><span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">의류는 150달러 미만이면 면세, 초과 시 약 13% (관세 8% + 부가세 10%)가 부과됩니다. 미국발 상품은 200달러까지 면세 혜택이 있습니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>사이즈가 맞지 않으면 어떻게 하나요?</span><span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">수령 후 7일 이내에 연락 주시면 반품·교환 대행을 진행해드립니다. 단, 국제 반송 배송비는 고객 부담입니다.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>품절 상품도 구해주나요?</span><span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">현지 오프라인 매장 방문 구매도 일부 지역에서 가능합니다. 문의 주시면 재고 확인 후 안내드립니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SMARTSTORE BANNER -->
+<div class="store-banner">
+  <h2>네이버 스마트스토어에서도 만나보세요 🛒</h2>
+  <p>인기 상품은 스마트스토어에서 바로 구매 가능합니다. 안전 결제 · 네이버 포인트 적립!</p>
+  <a href="#" class="btn btn-naver">스마트스토어 바로가기 →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#"><span>S</span>NAPAW</a>
+      <p>해외 패션 구매대행 전문. 일본·미국·유럽·중국의 인기 패션 아이템을 빠르고 안전하게 직구해드립니다.</p>
+    </div>
+    <div class="footer-links">
+      <h4>서비스</h4>
+      <ul>
+        <li><a href="#why">서비스 소개</a></li>
+        <li><a href="#how">이용 방법</a></li>
+        <li><a href="#calc">배송비 계산기</a></li>
+        <li><a href="#order">주문 신청</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>고객센터</h4>
+      <ul>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">카카오 문의</a></li>
+        <li><a href="#">환불 정책</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 SNAPAW. 해외 패션 구매대행.</p>
+    <p style="color:#222">사업자등록번호: 000-00-00000 | 통신판매업 신고번호: 제0000-서울-0000호</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* 배송비 계산기 */
+  const SHIP_RATES = { jp: 9000, us: 18000, eu: 22000, cn: 7000 };
+  const WEIGHT_RATES = { jp: 3, us: 5, eu: 6, cn: 2 };
+
+  function fmt(n) { return n.toLocaleString('ko-KR') + '원'; }
+
+  function calculate() {
+    const country = document.getElementById('c-country').value;
+    const price   = parseFloat(document.getElementById('c-price').value) || 0;
+    const weight  = parseFloat(document.getElementById('c-weight').value) || 300;
+    const count   = parseInt(document.getElementById('c-count').value) || 1;
+
+    const totalPrice = price * count;
+    const fee        = Math.round(totalPrice * 0.08);
+    const ship       = SHIP_RATES[country] + Math.round((weight / 1000) * WEIGHT_RATES[country] * 1000) * count;
+    const taxable    = totalPrice > 150000 ? totalPrice : 0;
+    const tax        = Math.round(taxable * 0.13);
+    const total      = totalPrice + fee + ship + tax;
+
+    document.getElementById('r-price').textContent = fmt(totalPrice);
+    document.getElementById('r-fee').textContent   = fmt(fee);
+    document.getElementById('r-ship').textContent  = fmt(ship);
+    document.getElementById('r-tax').textContent   = tax > 0 ? fmt(tax) : '면세';
+    document.getElementById('r-total').textContent = fmt(total);
+
+    const result = document.getElementById('calc-result');
+    result.classList.add('show');
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  /* 주문 폼 */
+  function submitOrder() {
+    const name  = document.getElementById('o-name').value.trim();
+    const phone = document.getElementById('o-phone').value.trim();
+    const url   = document.getElementById('o-url').value.trim();
+
+    if (!name || !phone || !url) {
+      showToast('이름, 연락처, 상품 URL은 필수입니다.');
+      return;
+    }
+    showToast('✅ 신청이 완료되었습니다! 24시간 내 연락드립니다.');
+    ['o-name','o-phone','o-url','o-detail','o-budget'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+  }
+
+  /* FAQ 토글 */
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* 토스트 */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  /* 스크롤 네비 하이라이트 */
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(13,13,13,.97)' : 'rgba(13,13,13,.92)';
+  });
+</script>
+</body>
+</html>
