@@ -1,51 +1,51 @@
-# Global Culture Series — Sample Image Breed Plan
+# Pet Memorial Series — Sample Image Breed Plan
 
-Goal: sample/gallery images should show popular US dog breeds in each culture's
-art style, so customers with common breeds (Golden Retriever, French Bulldog,
-Labrador, Corgi, Poodle, Husky, etc.) can picture their own dog, regardless of
-which collection they're browsing.
+Goal: sample/gallery images should show popular US dog and cat breeds in each
+memorial style, so grieving pet owners with common breeds (Golden Retriever,
+French Bulldog, Labrador, Corgi, tabby cat, etc.) can picture their own pet,
+regardless of which style they're browsing. Tone matters here more than in a
+typical novelty product gallery — images should read as gentle and comforting,
+not flashy.
 
-## Scaled-down plan: 2 breeds x 6 collections = 12 images
+## Scaled-down plan: 2 pets x 6 styles = 12 images
 
-Rather than 18 (3 breeds x 6), start with the 2 highest-appeal US breeds across
-all 6 collections:
+Start with the 2 highest-appeal pets across all 6 styles:
 
-- **Golden Retriever** — broadest US appeal
-- **French Bulldog** — strong social-media engagement
+- **Golden Retriever** — broadest US appeal, classic "family dog" association
+- **Tabby Cat** — covers the cat-owner audience, which pet-loss gifting skews toward
 
 | # | Image |
 |---|---|
-| 1 | Golden Retriever — Samurai |
-| 2 | Golden Retriever — Pharaoh |
-| 3 | Golden Retriever — Viking |
-| 4 | Golden Retriever — Renaissance |
-| 5 | Golden Retriever — Maharaja |
-| 6 | Golden Retriever — Frida |
-| 7 | French Bulldog — Samurai |
-| 8 | French Bulldog — Pharaoh |
-| 9 | French Bulldog — Viking |
-| 10 | French Bulldog — Renaissance |
-| 11 | French Bulldog — Maharaja |
-| 12 | French Bulldog — Frida |
+| 1 | Golden Retriever — Rainbow Bridge |
+| 2 | Golden Retriever — Guardian Among the Stars |
+| 3 | Golden Retriever — Forever Garden |
+| 4 | Golden Retriever — Golden Light |
+| 5 | Golden Retriever — Cherished Moment |
+| 6 | Golden Retriever — Gentle Clouds |
+| 7 | Tabby Cat — Rainbow Bridge |
+| 8 | Tabby Cat — Guardian Among the Stars |
+| 9 | Tabby Cat — Forever Garden |
+| 10 | Tabby Cat — Golden Light |
+| 11 | Tabby Cat — Cherished Moment |
+| 12 | Tabby Cat — Gentle Clouds |
 
-These 12 cover: homepage "Popular Breeds Transformed" section, each collection
-page gallery, the canvas product gallery, and the hero collage.
+These 12 cover: homepage gallery, each style's product gallery, the canvas
+product gallery, and the hero collage.
 
-(Original 18-image / 3-breed-per-collection plan kept below for later expansion.)
+## Stretch plan (18 images, 3 pets per style)
 
-## Stretch plan (18 images, 3 breeds per collection)
-
-| Collection (culture)   | Dog 1 (accent breed) | Dog 2          | Dog 3                  |
-|--------------------------|------------------------|----------------|------------------------|
-| Samurai (Japan)          | Shiba Inu              | Golden Retriever | French Bulldog        |
-| Pharaoh (Egypt)          | Doberman               | Labrador       | Corgi                  |
-| Viking (Nordic)          | Siberian Husky         | German Shepherd | Pomeranian            |
-| Renaissance (Italy)      | —                      | Poodle         | Cavalier King Charles Spaniel, Beagle |
-| Maharaja (India)         | —                      | Golden Retriever | Dachshund, Australian Shepherd |
-| Frida (Mexico)           | Chihuahua              | French Bulldog | Shih Tzu               |
+| Style                      | Pet 1           | Pet 2        | Pet 3                  |
+|-----------------------------|------------------|--------------|-------------------------|
+| Rainbow Bridge               | Labrador         | Tabby Cat    | French Bulldog          |
+| Guardian Among the Stars     | Siberian Husky   | Black Cat    | German Shepherd         |
+| Forever Garden                | Corgi            | Calico Cat   | Beagle                  |
+| Golden Light                  | Golden Retriever | Orange Tabby | Poodle                  |
+| Cherished Moment               | Shih Tzu         | Tabby Cat    | Dachshund               |
+| Gentle Clouds                  | Husky            | White Cat    | Chihuahua               |
 
 ## Status
 
-Not generated yet, and **not the current priority**. Per `README.md`, AI artwork
-generation is a manual step (Replicate automation paused). Image generation can
-happen any time; the order flow (see `ORDER_FLOW_TEST.md`) should be verified first.
+Not generated yet, and **not the current priority**. AI artwork generation is now
+automated end-to-end (see `README.md`), but these are just static sample/gallery
+images. Image generation can happen any time; the order flow (see
+`ORDER_FLOW_TEST.md`) should be verified first.

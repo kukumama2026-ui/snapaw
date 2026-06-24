@@ -1,23 +1,25 @@
 # Snapaw Printful Automation
 
-Backend service supporting the "Global Culture Series" personalization flow for
-Snapaw Club. Full automation is currently paused — the flow is now:
+Backend service supporting the pet memorial portrait personalization flow for
+Snapaw Club. The flow is fully automated:
 
-1. Customer uploads their pet's photo and picks a culture theme on the product page.
-2. Customer places the order as normal.
-3. The order webhook logs which line items have a customer photo attached.
-4. **You** generate the AI artwork manually and place the order on Printful manually.
+1. Customer uploads their pet's photo and picks a memorial style on the product page.
+2. The widget calls `/api/upload` then `/api/transform` to generate the AI memorial portrait.
+3. Customer places the order as normal, with the finished artwork attached as a line item property.
+4. The order webhook places a matching order with Printful automatically, using that artwork.
 
 ## Architecture
 
 1. **`/api/upload`** — receives the customer's raw photo, stores it in Vercel Blob, returns a URL.
-2. **`widget/upload-widget.js`** — embeddable script for the Shopify product page. Adds an
-   upload + theme picker UI, calls `/api/upload`, and writes the photo URL and chosen
-   theme into hidden `properties[_customer_photo_url]` / `properties[Culture Theme]`
-   fields on the Add to Cart form so they travel with the order as line item properties.
-3. **`/api/webhooks/shopify-order`** — Shopify calls this when an order is created. For
-   each line item with a `_customer_photo_url` property, it logs the recipient, theme,
-   and photo URL so they can be picked up for manual processing.
+2. **`/api/transform`** — sends the photo + chosen memorial style to Replicate, generates the
+   stylized portrait, re-hosts the result in Vercel Blob, returns the final URL.
+3. **`widget/upload-widget.js`** — embeddable script for the Shopify product page. Adds an
+   upload + style picker UI, calls the two endpoints above, and writes the resulting artwork
+   URL into a hidden `properties[_customer_photo_url]` field on the Add to Cart form so it
+   travels with the order as a line item property.
+4. **`/api/webhooks/shopify-order`** — Shopify calls this when an order is created. For each
+   line item with a `_customer_photo_url` property, it looks up the matching Printful catalog
+   variant (see `lib/variantMap.js`) and places an order with Printful using that artwork.
 
 ## Setup
 
@@ -32,6 +34,9 @@ npm install
 
 | Key | Where to get it |
 |---|---|
+| `PRINTFUL_API_KEY` | printful.com → Settings → Stores → API access (private token) |
+| `REPLICATE_API_TOKEN` | https://replicate.com/account/api-tokens |
+| `REPLICATE_MODEL_VERSION` | `black-forest-labs/flux-kontext-pro` (already set) |
 | `BLOB_READ_WRITE_TOKEN` | Auto-created when you add a Vercel Blob store to the project |
 | `SHOPIFY_WEBHOOK_SECRET` | Set when you create the webhook (step 4) |
 | `SHOPIFY_ADMIN_API_TOKEN` | Shopify admin → Settings → Apps → Develop apps → create app with `read_orders`, `read_products` scopes |
@@ -66,19 +71,16 @@ In the Pagetify/Shopify product template, add a Custom Code block:
 <script src="https://YOUR-APP.vercel.app/widget/upload-widget.js" defer></script>
 ```
 
-## Manual order workflow
+## Variant mapping
 
-For each new order, check the webhook logs (Vercel → project → Deployments →
-Functions → `/api/webhooks/shopify-order`) for entries with a `photoUrl`. For each:
+This store places orders directly via the Printful Orders API (not Printful's Shopify
+sync app), so each Shopify variant must map to a Printful **catalog** variant ID in
+`lib/variantMap.js`. If products or variants change, re-derive the catalog IDs from
+`https://api.printful.com/products/{id}` and update the map.
 
-1. Download the customer's photo from `photoUrl`.
-2. Generate the Global Culture Series artwork yourself for the chosen `theme`.
-3. Place the order in the Printful dashboard using that artwork and the `recipient` info.
+## Monitoring
 
-## Re-enabling automation later
-
-The previous AI generation (Replicate) and auto-Printful-order code was removed for
-now. If/when this flow is working reliably and you want to automate it again, that
-code can be rebuilt: an `/api/transform` endpoint calling Replicate, and a Printful
-`createOrder` call in the webhook handler keyed off a Shopify variant → Printful sync
-variant map.
+Check the webhook logs (Vercel → project → Deployments → Functions →
+`/api/webhooks/shopify-order`) after each order. Line items that fail (no variant
+mapping, Printful API error) are logged with the reason so they can be placed manually
+as a fallback.

@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+import { createOrder } from '../../../../lib/printful';
+import { lookupPrintfulVariant } from '../../../../lib/variantMap';
 
 export const runtime = 'nodejs';
 
@@ -37,27 +39,37 @@ export async function POST(request) {
     phone: order.shipping_address.phone || '',
   };
 
-  // Automatic AI generation + Printful ordering is paused. Just surface the
-  // personalized line items so they can be picked up and processed manually:
-  // generate the artwork, then place the order in the Printful dashboard.
-  const personalizedItems = [];
+  const placed = [];
+  const failed = [];
+
   for (const item of order.line_items) {
-    const photoUrl = findProperty(item, '_customer_photo_url');
-    if (!photoUrl) continue; // skip non-personalized items
+    const artworkUrl = findProperty(item, '_customer_photo_url');
+    if (!artworkUrl) continue; // skip non-personalized items
 
-    personalizedItems.push({
-      orderName: order.name,
-      lineItemId: item.id,
-      variantId: item.variant_id,
-      theme: findProperty(item, 'Culture Theme'),
-      photoUrl,
-      recipient,
-    });
+    const printfulVariant = lookupPrintfulVariant(item.variant_id);
+    if (!printfulVariant) {
+      failed.push({ lineItemId: item.id, variantId: item.variant_id, reason: 'No Printful variant mapping found' });
+      continue;
+    }
+
+    try {
+      const printfulOrder = await createOrder({
+        printfulVariantId: printfulVariant.printfulVariantId,
+        artworkUrl,
+        quantity: item.quantity,
+        recipient,
+        externalId: `${order.name}-${item.id}`,
+      });
+      placed.push({ lineItemId: item.id, printfulOrderId: printfulOrder.id });
+    } catch (err) {
+      console.error(`Failed to place Printful order for line item ${item.id}:`, err);
+      failed.push({ lineItemId: item.id, variantId: item.variant_id, reason: err.message });
+    }
   }
 
-  if (personalizedItems.length) {
-    console.log('New personalized order(s) awaiting manual processing:', JSON.stringify(personalizedItems, null, 2));
+  if (failed.length) {
+    console.error(`Order ${order.name}: ${failed.length} line item(s) failed Printful fulfillment`, failed);
   }
 
-  return Response.json({ ok: true, pendingItems: personalizedItems.length, items: personalizedItems });
+  return Response.json({ ok: true, placed, failed });
 }

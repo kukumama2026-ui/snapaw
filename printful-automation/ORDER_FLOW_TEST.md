@@ -1,8 +1,8 @@
 # Order Flow Test Checklist ($1 end-to-end test order)
 
-Goal: confirm a customer can upload a photo, pick a culture theme, check out,
-and the order shows up correctly for manual Printful processing — before
-spending more time on images/design.
+Goal: confirm a customer can upload a photo, pick a memorial style, check out,
+and Printful automatically receives a matching order with the AI-generated
+artwork — before spending more time on images/design.
 
 ## Current status (checked 2026-06-10)
 
@@ -25,7 +25,7 @@ spending more time on images/design.
 
 1. **Deploy** `printful-automation/` to Vercel (`vercel`), add a Blob store,
    and set the env vars above.
-2. **Embed the widget** on the "Global Culture Pet Portrait Canvas" product
+2. **Embed the widget** on the "Pet Memorial Portrait Canvas" product
    page: add a Custom Liquid block (or app embed) with:
    ```html
    <div id="snapaw-upload-widget" data-api-base="https://YOUR-APP.vercel.app"></div>
@@ -41,13 +41,14 @@ spending more time on images/design.
      a 100%-off discount code on a real-priced variant — cleaner, no price
      edit to revert).
    - On the live storefront, go to the product page, upload a test photo,
-     pick a culture theme, add to cart, and complete checkout with a real
+     pick a memorial style, add to cart, and complete checkout with a real
      card (small charge) or test payment if Shopify test mode is enabled.
 5. **Verify**:
    - Order appears in Shopify Admin with `properties[_customer_photo_url]`
-     and `properties[Culture Theme]` on the line item.
-   - Vercel function logs for `/api/webhooks/shopify-order` show the
-     `personalizedItems` entry with photo URL, theme, and recipient.
+     (the AI-generated artwork URL) and `properties[Memorial Style]` on the line item.
+   - Vercel function logs for `/api/webhooks/shopify-order` show a `placed` entry
+     with a `printfulOrderId`.
+   - The order shows up in the Printful dashboard with that artwork attached.
 6. **Revert** any temporary price/discount changes after the test.
 
 ## Open questions for the operator

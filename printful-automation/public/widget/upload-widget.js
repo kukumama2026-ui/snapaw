@@ -1,26 +1,26 @@
 /**
- * Snapaw "Global Culture Series" pet photo upload widget.
+ * Snapaw pet memorial portrait upload widget.
  *
  * Embed in the Shopify product page template (e.g. via a Custom Liquid block):
  *
  *   <div id="snapaw-upload-widget" data-api-base="https://YOUR-APP.vercel.app"></div>
  *   <script src="https://YOUR-APP.vercel.app/widget/upload-widget.js" defer></script>
  *
- * AI generation and Printful ordering are handled manually for now. This
- * widget only collects the customer's photo and a culture theme choice, and
- * writes them into hidden inputs on the product form so they're saved as
- * line item properties on the order:
+ * On upload, this widget calls `/api/upload` then `/api/transform` to turn
+ * the photo into the chosen memorial-style portrait, then writes the result
+ * into hidden inputs on the product form so they're saved as line item
+ * properties on the order:
  *   properties[_customer_photo_url]
- *   properties[Culture Theme]
+ *   properties[Memorial Style]
  */
 (function () {
   const THEMES = [
-    { value: 'egypt', label: 'Egypt (Pharaoh)' },
-    { value: 'italy', label: 'Italy (Renaissance)' },
-    { value: 'mexico', label: 'Mexico (Frida)' },
-    { value: 'scandinavia', label: 'Scandinavia (Nordic)' },
-    { value: 'japan', label: 'Japan (Samurai)' },
-    { value: 'india', label: 'India (Maharaja)' },
+    { value: 'rainbow_bridge', label: 'Rainbow Bridge' },
+    { value: 'guardian_star', label: 'Guardian Among the Stars' },
+    { value: 'forever_garden', label: 'Forever Garden' },
+    { value: 'golden_light', label: 'Golden Light' },
+    { value: 'cherished_moment', label: 'Cherished Moment' },
+    { value: 'gentle_clouds', label: 'Gentle Clouds' },
   ];
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -130,7 +130,7 @@
         </div>
         <label>1. Upload your pet's photo</label>
         <input type="file" accept="image/*" class="snapaw-file-input" />
-        <label>2. Choose a culture theme</label>
+        <label>2. Choose a memorial style</label>
         <select class="snapaw-theme-select">
           ${THEMES.map((t) => `<option value="${t.value}">${t.label}</option>`).join('')}
         </select>
@@ -183,20 +183,35 @@
         if (!uploadRes.ok) {
           throw new Error(`Upload failed with status ${uploadRes.status}`);
         }
-        const data = await uploadRes.json();
-        if (!data.url) {
+        const uploadData = await uploadRes.json();
+        if (!uploadData.url) {
           throw new Error('Upload response missing url');
         }
-        uploadedUrl = data.url;
+
+        setStatus('Creating your memorial portrait... this can take up to a minute.');
+
+        const transformRes = await fetch(`${apiBase}/api/transform`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageUrl: uploadData.url, theme: themeSelect.value }),
+        });
+        if (!transformRes.ok) {
+          throw new Error(`Transform failed with status ${transformRes.status}`);
+        }
+        const transformData = await transformRes.json();
+        if (!transformData.url) {
+          throw new Error('Transform response missing url');
+        }
+        uploadedUrl = transformData.url;
 
         preview.src = uploadedUrl;
         preview.style.display = 'block';
-        setStatus('Photo uploaded! Add to cart to place your order.', 'snapaw-success');
+        setStatus('Your memorial portrait is ready! Add to cart to place your order.', 'snapaw-success');
 
         setHiddenField('_customer_photo_url', uploadedUrl);
-        setHiddenField('Culture Theme', themeSelect.options[themeSelect.selectedIndex].text);
+        setHiddenField('Memorial Style', themeSelect.options[themeSelect.selectedIndex].text);
       } catch (err) {
-        setStatus('Upload failed, please try again.', 'snapaw-error');
+        setStatus('Something went wrong creating your portrait, please try again.', 'snapaw-error');
         console.error(err);
       } finally {
         uploadBtn.disabled = false;
