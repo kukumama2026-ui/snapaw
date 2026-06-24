@@ -35,6 +35,14 @@ export const VARIANT_MAP = {
   // Rainbow Bridge Pet Memorial Tote
   61888824869234: { printfulProductId: 367, printfulVariantId: 10458 }, // Natural Canvas -> Oyster
   61888824902002: { printfulProductId: 367, printfulVariantId: 10457 }, // Black Canvas
+
+  // Until We Meet Again Framed Print
+  61973529231730: { printfulProductId: 614, printfulVariantId: 17627 }, // 8x10 inch -> Framed Canvas (in) Black 8"x10"
+  61973529264498: { printfulProductId: 614, printfulVariantId: 17629 }, // 11x14 inch -> Framed Canvas (in) Black 11"x14"
+
+  // In Loving Memory Ornament
+  61973529297266: { printfulProductId: 881, printfulVariantId: 22783 }, // Heart -> Ceramic Ornament (Heart)
+  61973529330034: { printfulProductId: 881, printfulVariantId: 22782 }, // Circle -> Ceramic Ornament (Circle)
 };
 
 export function lookupPrintfulVariant(shopifyVariantId) {
