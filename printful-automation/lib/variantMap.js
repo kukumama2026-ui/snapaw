@@ -43,6 +43,13 @@ export const VARIANT_MAP = {
   // In Loving Memory Ornament
   61973529297266: { printfulProductId: 881, printfulVariantId: 22783 }, // Heart -> Ceramic Ornament (Heart)
   61973529330034: { printfulProductId: 881, printfulVariantId: 22782 }, // Circle -> Ceramic Ornament (Circle)
+
+  // Pieces of You Memory Puzzle
+  61977663406450: { printfulProductId: 534, printfulVariantId: 13431 }, // 252 pieces
+  61977663439218: { printfulProductId: 534, printfulVariantId: 13432 }, // 520 pieces
+
+  // Forever in Our Garden Flag
+  61977663832434: { printfulProductId: 746, printfulVariantId: 19211 }, // 12x17 inch
 };
 
 export function lookupPrintfulVariant(shopifyVariantId) {
