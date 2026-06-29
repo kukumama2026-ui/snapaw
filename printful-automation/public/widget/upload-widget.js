@@ -137,6 +137,9 @@
         <button type="button" class="snapaw-upload-btn">Upload Photo</button>
         <div class="snapaw-status"></div>
         <img class="snapaw-preview" />
+        <div class="snapaw-retry-hint" style="display:none; font-size:0.8rem; color:#666;">
+          Not quite right? Pick a different style above and click "Try Another Style" — it's free to retry before you add to cart.
+        </div>
       </div>
     `;
 
@@ -145,6 +148,7 @@
     const uploadBtn = container.querySelector('.snapaw-upload-btn');
     const status = container.querySelector('.snapaw-status');
     const preview = container.querySelector('.snapaw-preview');
+    const retryHint = container.querySelector('.snapaw-retry-hint');
 
     let uploadedUrl = null;
 
@@ -158,6 +162,8 @@
     fileInput.addEventListener('change', () => {
       uploadedUrl = null;
       preview.style.display = 'none';
+      retryHint.style.display = 'none';
+      uploadBtn.textContent = 'Upload Photo';
       setHiddenField('_customer_photo_url', '');
       setStatus('');
     });
@@ -206,6 +212,8 @@
 
         preview.src = uploadedUrl;
         preview.style.display = 'block';
+        retryHint.style.display = 'block';
+        uploadBtn.textContent = 'Try Another Style';
         setStatus('Your memorial portrait is ready! Add to cart to place your order.', 'snapaw-success');
 
         setHiddenField('_customer_photo_url', uploadedUrl);
